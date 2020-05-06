@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Library App </title>
+    {% block page_specific_css %}
+
+    {% endblock %}
+
+</head>
+<body>
+
+{% block page_specific_js %}
+
+{% endblock %}
+
+<div class="container-fluid">
+    <main role="main" class="ml-auto px-4">
+        {% block content %}
+        {% endblock %}
+    </main>
+</div>
+</body>
+</html>
