@@ -9,9 +9,7 @@ def create_app():
 
     # This section ties the URLs to the functions defined below.
     # For example, entering www.url.com/admin_dashboard/ should call the "home" function
-    app.add_url_rule("/admin_dashboard/", 'home', home)
-    app.add_url_rule("/admin_dashboard/login/", 'login', login, methods=['GET', 'POST'])
-    app.add_url_rule("/admin_dashboard/logout/", 'logout', logout)
+    app.add_url_rule("/", 'home', home)
 
     # Error page routes
     # app.register_error_handler(403, page_bad_permissions)
