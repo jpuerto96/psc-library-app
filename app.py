@@ -5,13 +5,15 @@ import logging
 
 db = SQLAlchemy()
 
+
 def create_app():
     """
     This function is used to generate a Flask app. This is done in order to have gunicorn host the app appropriately.
     """
     app = Flask(__name__)
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://je2l4u8j4406h8t6:yqkud6ud1p49psnd@ijj1btjwrd3b7932.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/srznofy8a4o4oavy"
+    app.config[
+        'SQLALCHEMY_DATABASE_URI'] = "mysql://je2l4u8j4406h8t6:yqkud6ud1p49psnd@ijj1btjwrd3b7932.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/srznofy8a4o4oavy"
 
     db.init_app(app)
 
