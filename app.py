@@ -15,7 +15,6 @@ def create_app():
     # app.register_error_handler(403, page_bad_permissions)
     # app.register_error_handler(404, page_bad_route)
 
-
     gunicorn_logger = logging.getLogger('gunicorn.error')
     app.logger.handlers = gunicorn_logger.handlers
     app.logger.setLevel(gunicorn_logger.level)
@@ -23,7 +22,7 @@ def create_app():
     return app
 
 def home():
-    return render_template('')
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
