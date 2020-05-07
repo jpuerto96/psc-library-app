@@ -1,5 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, current_app
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 import logging
+
+db = SQLAlchemy()
 
 def create_app():
     """
@@ -7,8 +11,12 @@ def create_app():
     """
     app = Flask(__name__)
 
-    # This section ties the URLs to the functions defined below.
-    # For example, entering www.url.com/admin_dashboard/ should call the "home" function
+    app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://je2l4u8j4406h8t6:yqkud6ud1p49psnd@ijj1btjwrd3b7932.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/srznofy8a4o4oavy"
+
+    db.init_app(app)
+
+    migrate = Migrate(app, db)
+
     app.add_url_rule("/", 'home', home)
 
     # Error page routes
@@ -21,7 +29,9 @@ def create_app():
 
     return app
 
+
 def home():
+    current_app.logger.info('Home')
     return render_template('index.html')
 
 
