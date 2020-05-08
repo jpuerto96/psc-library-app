@@ -1,9 +1,15 @@
 from flask import Flask, render_template, current_app
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_login import LoginManager
+
+import endpoints
+
 import logging
 
 db = SQLAlchemy()
+migrate = Migrate()
+login_manager = LoginManager()
 
 
 def create_app():
@@ -16,10 +22,10 @@ def create_app():
         'SQLALCHEMY_DATABASE_URI'] = "mysql://je2l4u8j4406h8t6:yqkud6ud1p49psnd@ijj1btjwrd3b7932.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/srznofy8a4o4oavy"
 
     db.init_app(app)
+    migrate.init_app(app, db)
+    login_manager.init_app(app)
 
-    migrate = Migrate(app, db)
-
-    app.add_url_rule("/", 'home', home)
+    app.register_blueprint(endpoints.UsersAPI.users_endpoints)
 
     # Error page routes
     # app.register_error_handler(403, page_bad_permissions)
@@ -30,11 +36,6 @@ def create_app():
     app.logger.setLevel(gunicorn_logger.level)
 
     return app
-
-
-def home():
-    current_app.logger.info('Home')
-    return render_template('index.html')
 
 
 if __name__ == '__main__':
