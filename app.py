@@ -5,7 +5,6 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
-from models import UserModel
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -44,6 +43,7 @@ def create_app():
 
 @login_manager.user_loader
 def load_user(user_id):
+    from models import UserModel
     if user_id is not None:
         return UserModel.query.get(int(user_id))
     return None
