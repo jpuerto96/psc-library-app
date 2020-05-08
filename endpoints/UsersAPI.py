@@ -1,7 +1,7 @@
 from flask import Blueprint, redirect, url_for, render_template, request, flash
 from flask_login import current_user, login_required, login_user, logout_user
 
-from app import db, login_manager
+from app import db
 from models import UserModel, Forms
 
 users_endpoints = Blueprint('users_endpoints', __name__)
@@ -30,7 +30,7 @@ def login():
         flash('Invalid username/password combination')
         return redirect(url_for('home'))
 
-    return render_template('login.html')
+    return render_template('login.html', form=login_form)
 
 
 @users_endpoints.route('/logout/', methods=['GET'])
@@ -62,10 +62,3 @@ def signup():
         flash('Email address is already registered.')
 
     return render_template('signup.html', form=signup_form)
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    if user_id is not None:
-        return UserModel.query.get(user_id)
-    return None
