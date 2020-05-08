@@ -1,7 +1,8 @@
-from flask import Blueprint, redirect, url_for, render_template, request, make_response, flash
+from flask import Blueprint, redirect, url_for, render_template, request, flash
 from flask_login import current_user, login_required, login_user, logout_user
-from models import UserModel, Forms
+
 from app import db, login_manager
+from models import UserModel, Forms
 
 users_endpoints = Blueprint('users_endpoints', __name__)
 

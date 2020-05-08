@@ -1,11 +1,11 @@
-from flask import Flask, render_template, current_app
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask_login import LoginManager
-
-from endpoints.UsersAPI import users_endpoints
-
 import logging
+
+from flask import Flask
+from flask_login import LoginManager
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
+
+from endpoints import UsersAPI
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -25,7 +25,7 @@ def create_app():
     migrate.init_app(app, db)
     login_manager.init_app(app)
 
-    app.register_blueprint(users_endpoints)
+    app.register_blueprint(UsersAPI.users_endpoints)
 
     # Error page routes
     # app.register_error_handler(403, page_bad_permissions)
@@ -39,4 +39,4 @@ def create_app():
 
 
 if __name__ == '__main__':
-    create_app()
+    create_app().run()

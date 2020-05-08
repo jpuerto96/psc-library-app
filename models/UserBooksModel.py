@@ -1,5 +1,4 @@
 from app import db
-from sqlalchemy import ForeignKey
 
 
 class UserBooksModel(db.Model):
@@ -24,4 +23,3 @@ class UserBooksModel(db.Model):
 
     user = db.relationship("UserModel", back_populates="books")
     book = db.relationship("BookModel", back_populates="users")
-
