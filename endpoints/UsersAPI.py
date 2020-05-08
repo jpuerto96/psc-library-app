@@ -8,8 +8,8 @@ users_endpoints = Blueprint('users_endpoints', __name__)
 
 
 # Return the home page
-@login_required
 @users_endpoints.route('/', methods=['GET'])
+@login_required
 def home():
     return render_template("index.html")
 
