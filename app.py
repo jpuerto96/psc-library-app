@@ -1,10 +1,9 @@
 import logging
 
-from flask import Flask
+from flask import Flask, redirect, request
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -17,18 +16,19 @@ def create_app():
     """
     app = Flask(__name__)
 
-    from endpoints import UsersAPI, BooksAPI
+    from endpoints import UsersAPI
 
     app.config[
         'SQLALCHEMY_DATABASE_URI'] = "mysql://je2l4u8j4406h8t6:yqkud6ud1p49psnd@ijj1btjwrd3b7932.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/srznofy8a4o4oavy"
     app.config[
         'SECRET_KEY'] = "hello_world!"
 
+    login_manager.login_view = 'login'
+    app.register_blueprint(UsersAPI.users_endpoints)
+
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
-
-    app.register_blueprint(UsersAPI.users_endpoints)
 
     # Error page routes
     # app.register_error_handler(403, page_bad_permissions)
@@ -47,6 +47,11 @@ def load_user(user_id):
     if user_id is not None:
         return UserModel.query.get(int(user_id))
     return None
+
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    return redirect('/login?next=' + request.path)
 
 
 if __name__ == '__main__':
