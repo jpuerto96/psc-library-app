@@ -1,5 +1,7 @@
 from app import db
 from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 class UserModel(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -30,3 +32,9 @@ class UserModel(UserMixin, db.Model):
                       default='Patron')
 
     books = db.relationship("UserBooksModel", back_populates="books")
+
+    def generate_password_hash(self, password):
+        self.password_hash = generate_password_hash(password, method='sha256')
+
+    def is_valid_password(self, password):
+        return check_password_hash(self.password, password)
