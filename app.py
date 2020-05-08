@@ -25,7 +25,7 @@ def create_app():
     migrate.init_app(app, db)
     login_manager.init_app(app)
 
-    app.register_blueprint(endpoints.UsersAPI.users_endpoints)
+    app.register_blueprint(users_endpoints)
 
     # Error page routes
     # app.register_error_handler(403, page_bad_permissions)
