@@ -5,7 +5,7 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
-from endpoints import UsersAPI
+from models import UserModel
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -18,8 +18,12 @@ def create_app():
     """
     app = Flask(__name__)
 
+    from endpoints import UsersAPI, BooksAPI
+
     app.config[
         'SQLALCHEMY_DATABASE_URI'] = "mysql://je2l4u8j4406h8t6:yqkud6ud1p49psnd@ijj1btjwrd3b7932.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/srznofy8a4o4oavy"
+    app.config[
+        'SECRET_KEY'] = "hello_world!"
 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -36,6 +40,13 @@ def create_app():
     app.logger.setLevel(gunicorn_logger.level)
 
     return app
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    if user_id is not None:
+        return UserModel.query.get(int(user_id))
+    return None
 
 
 if __name__ == '__main__':
