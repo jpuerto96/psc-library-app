@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 
-import endpoints
+from endpoints.UsersAPI import users_endpoints
 
 import logging
 
