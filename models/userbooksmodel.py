@@ -24,5 +24,14 @@ class UserBooksModel(db.Model):
                             nullable=False
                             )
 
+    date_of_purchase = db.Column(db.Date,
+                                 index=False,
+                                 unique=False,
+                                 nullable=False)
+    notes = db.Column(db.Text,
+                      index=False,
+                      unique=False,
+                      nullable=True)
+
     user = db.relationship("UserModel", back_populates="books")
     book = db.relationship("BookModel", back_populates="users")
