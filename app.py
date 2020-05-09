@@ -19,7 +19,7 @@ def create_app():
     app = Flask(__name__)
 
     from endpoints.view_routes import authview, appview
-    from endpoints.api_routes import booksapi
+    from endpoints.api_routes import booksapi, userbooksapi
 
     from models import usersmodel, booksmodel, userbooksmodel
 
@@ -39,6 +39,9 @@ def create_app():
 
     app.register_blueprint(authview.auth_view_endpoints)
     app.register_blueprint(appview.app_view_endpoints)
+
+    app.register_blueprint(booksapi.books_api_endpoints)
+    app.register_blueprint(userbooksapi.user_books_api_endpoints)
 
     db.init_app(app)
     migrate.init_app(app, db)
