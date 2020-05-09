@@ -32,10 +32,13 @@ class UserModel(UserMixin, db.Model):
                       nullable=False,
                       default='Patron')
 
-    books = db.relationship("UserBooksModel", back_populates="books")
+    books = db.relationship("UserBooksModel", back_populates="user")
 
     def generate_password_hash(self, password):
         self.password_hash = generate_password_hash(password, method='sha256')
 
     def is_valid_password(self, password):
-        return check_password_hash(self.password, password)
+        return check_password_hash(self.password_hash, password)
+
+    def __repr__(self):
+        return "%s: %s" % (str(self.username), str(self.email))
