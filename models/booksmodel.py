@@ -19,4 +19,4 @@ class BookModel(db.Model):
                       unique=False,
                       nullable=True)
 
-    users = db.relationship("UserBooksModel", back_populates="users")
+    users = db.relationship("UserBooksModel", back_populates="book")
