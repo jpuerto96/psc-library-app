@@ -48,5 +48,10 @@ class UsersModel(UserMixin, db.Model):
     def is_valid_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def __repr__(self):
-        return "%s: %s" % (str(self.username), str(self.email))
+    def serialize(self):
+        return {
+            "id": self.id,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email
+        }

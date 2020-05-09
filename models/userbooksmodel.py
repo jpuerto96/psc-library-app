@@ -35,3 +35,13 @@ class UserBooksModel(db.Model):
 
     user = db.relationship("UsersModel", back_populates="books")
     book = db.relationship("BooksModel", back_populates="users")
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "book_id": self.book_id,
+            "is_favorite": self.is_favorite,
+            "date_of_purchase": self.date_of_purchase,
+            "notes": self.notes
+        }

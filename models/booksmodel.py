@@ -16,3 +16,10 @@ class BooksModel(db.Model):
                        nullable=False)
 
     users = db.relationship("UserBooksModel", back_populates="book")
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "author": self.author
+        }
