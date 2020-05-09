@@ -25,6 +25,7 @@
                 <div class="form-group">
                     {{ form.submit(class="btn btn-lg btn-block btn-success", value="Sign Up") }}
                 </div>
+                {{ form.hidden_tag() }}
             </form>
             <div>
                 Already registered? <a href="/login/">Log In</a> here!
