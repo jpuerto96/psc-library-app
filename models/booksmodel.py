@@ -1,7 +1,7 @@
 from app import db
 
 
-class BookModel(db.Model):
+class BooksModel(db.Model):
     __tablename__ = 'books'
 
     id = db.Column(db.Integer,
