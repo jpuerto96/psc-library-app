@@ -27,7 +27,7 @@ class UserBooksModel(db.Model):
     date_of_purchase = db.Column(db.Date,
                                  index=False,
                                  unique=False,
-                                 nullable=False)
+                                 nullable=True)
     notes = db.Column(db.Text,
                       index=False,
                       unique=False,
