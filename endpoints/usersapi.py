@@ -1,9 +1,11 @@
 from flask import Blueprint, redirect, url_for, render_template, request, flash, current_app
 from flask_login import current_user, login_required, login_user, logout_user
+from flask_mail import Message
 
-from app import db
+from app import db, mail
 from models.forms import UserLoginForm, UserSignupForm
 from models.usersmodel import UserModel
+from models.tokenizer import get_token, is_valid_token
 
 users_endpoints = Blueprint('users_endpoints', __name__)
 
@@ -68,14 +70,25 @@ def signup():
 
 
 @users_endpoints.route('/register/', methods=['GET'])
-@users_endpoints.route('/register/<registration_token>/', methods=['POST'])
+@users_endpoints.route('/register/<registration_token>', methods=['GET'])
 def register(registration_token=None):
-    if request.method == 'GET':
-        current_app.logger.error(current_user)
-        if current_user.is_registered:
+    if registration_token is None:
+        token = get_token(current_user.email)
+        registration_url = url_for('users_endpoints.register', registration_token=token, _external=True)
+        msg = Message("SCP Library Registration",
+                      sender="scp.library.app@noreply.com",
+                      recipients=[current_user.email])
+        msg.html = render_template('email_templates/registration_email.html', registration_url=registration_url)
+        mail.send(msg)
+        logout_user()
+        return render_template('register.html')
+    else:
+        email = is_valid_token(registration_token)
+        if email:
+            user = UserModel.query.filter_by(email=email).first()
+            user.is_registered = True
+            db.session.commit()
+            login_user(user)
             return redirect(url_for('users_endpoints.home'))
         else:
-            # TODO: Add logic to send e-mail here.
             return render_template('register.html')
-
-

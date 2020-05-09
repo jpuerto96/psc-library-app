@@ -4,10 +4,12 @@ from flask import Flask, redirect, request
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail
 
 db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
+mail = Mail()
 
 
 def create_app():
@@ -24,6 +26,12 @@ def create_app():
         'SQLALCHEMY_DATABASE_URI'] = "mysql://je2l4u8j4406h8t6:yqkud6ud1p49psnd@ijj1btjwrd3b7932.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/srznofy8a4o4oavy"
     app.config[
         'SECRET_KEY'] = "hello_world!"
+    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+    app.config['MAIL_PORT'] = 465
+    app.config['MAIL_USE_SSL'] = True
+    app.config['MAIL_USERNAME'] = 'scp.library.app@gmail.com'
+    app.config['MAIL_PASSWORD'] = '6u2zjdr8'
+    app.config['SECURITY_PASSWORD_SALT'] = 'scplibraryapp'
 
     login_manager.login_view = 'login'
 
@@ -32,6 +40,7 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
+    mail.init_app(app)
 
     # Error page routes
     # app.register_error_handler(403, page_bad_permissions)
