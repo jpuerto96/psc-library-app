@@ -33,5 +33,5 @@ class UserBooksModel(db.Model):
                       unique=False,
                       nullable=True)
 
-    user = db.relationship("UserModel", back_populates="books")
-    book = db.relationship("BookModel", back_populates="users")
+    user = db.relationship("UsersModel", back_populates="books")
+    book = db.relationship("BooksModel", back_populates="users")
