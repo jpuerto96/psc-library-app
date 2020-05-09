@@ -9,6 +9,14 @@ class UserModel(UserMixin, db.Model):
 
     id = db.Column(db.Integer,
                    primary_key=True)
+    first_name = db.Column(db.String(20),
+                         index=True,
+                         unique=False,
+                         nullable=False)
+    last_name = db.Column(db.String(20),
+                         index=True,
+                         unique=False,
+                         nullable=False)
     username = db.Column(db.String(20),
                          index=True,
                          unique=True,
