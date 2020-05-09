@@ -56,6 +56,8 @@ def signup():
         existing_user = UserModel.query.filter_by(email=signup_form.email.data).first()
         if existing_user is None:
             user = UserModel(
+                first_name=signup_form.first_name.data,
+                last_name=signup_form.last_name.data,
                 username=signup_form.username.data,
                 email=signup_form.email.data
             )
