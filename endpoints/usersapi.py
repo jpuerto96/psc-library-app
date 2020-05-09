@@ -26,8 +26,11 @@ def login():
         user = UserModel.query.filter_by(username=login_form.username.data).first()  # Validate Login Attempt
         if user and user.is_valid_password(password=login_form.password.data):
             login_user(user)
-            next_page = request.args.get('next')
-            return redirect(next_page or url_for('users_endpoints.home'))
+            if user.is_registered:
+                next_page = request.args.get('next')
+                return redirect(next_page or url_for('users_endpoints.home'))
+            else:
+                return redirect(url_for('users_endpoints.register'))
         flash('Invalid username/password combination')
         return redirect(url_for('users_endpoints.home'))
 
@@ -58,7 +61,21 @@ def signup():
             db.session.add(user)
             db.session.commit()  # Create new user
             login_user(user)  # Log in as newly created user
-            return redirect(url_for('users_endpoints.home'))
+            return redirect(url_for('users_endpoints.register'))
         flash('Email address is already registered.')
 
     return render_template('signup.html', form=signup_form)
+
+
+@users_endpoints.route('/register/', methods=['GET'])
+@users_endpoints.route('/register/<registration_token>/', methods=['POST'])
+def register(registration_token=None):
+    if request.method == 'GET':
+        current_app.logger.error(current_user)
+        if current_user.is_registered:
+            return redirect(url_for('users_endpoints.home'))
+        else:
+            # TODO: Add logic to send e-mail here.
+            return render_template('register.html')
+
+
