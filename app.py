@@ -18,7 +18,9 @@ def create_app():
     """
     app = Flask(__name__)
 
-    from endpoints import usersapi
+    from endpoints.view_routes import authview, appview
+    from endpoints.api_routes import booksapi
+
     from models import usersmodel, booksmodel, userbooksmodel
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -35,7 +37,8 @@ def create_app():
 
     login_manager.login_view = 'login'
 
-    app.register_blueprint(usersapi.users_endpoints)
+    app.register_blueprint(authview.auth_view_endpoints)
+    app.register_blueprint(appview.app_view_endpoints)
 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -55,9 +58,9 @@ def create_app():
 
 @login_manager.user_loader
 def load_user(user_id):
-    from models.usersmodel import UserModel
+    from models.usersmodel import UsersModel
     if user_id is not None:
-        return UserModel.query.get(int(user_id))
+        return UsersModel.query.get(int(user_id))
     return None
 
 
