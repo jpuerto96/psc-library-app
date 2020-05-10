@@ -1,0 +1,47 @@
+{% extends "base_templates/base_modal.html" %}
+
+{% block modal_id %}books_{{ modal_method }}_modal{% endblock %}
+
+{% block modal_title %}{{ modal_method }} Book{% endblock %}
+
+{% block content %}
+    <div id="form-rows">
+        {% for label, field in modal_template.items() %}
+            {% set value = modal_data[label] if modal_data[label] else field['default'] %}
+            <div class="form-group row" style="margin-bottom: 10px; margin-top: 10px;">
+                {% set required = "required" if field.required else "" %}
+                <label class="col-md-8 {{ required }}"
+                       for="{{ label }}"> {{ field.description }} </label>
+                <div class="col-md-4">
+                    {% if field.type == 'select' %}
+                        <select id="{{ label }}" data-live-search="true" class="label form-control"
+                                data-width="100%" {{ required }} value="{{ value }}">
+                            {% for option in field.options %}
+                                <option> {{ option }} </option>
+                            {% endfor %}
+                        </select>
+                    {% elif field.type == 'textarea' %}
+                        <textarea id="{{ label }}" class="label form-control" type="{{ field.type }}" {{ required }}
+                            {% if 'validation' in field %}
+                                {% for rule, value in field.validation.items() %} {{ rule }}="{{ value }}"
+                                {% endfor %}
+                            {% endif %}
+                            style="font-family: 'Robot Mono', monospace;">{{ value }}
+                        </textarea>
+                    {% else %}
+                        <input id="{{ label }}" class="label form-control" type="{{ field.type }}" {{ required }}
+                        {% if 'validation' in field %}
+                            {% for rule, value in field.validation.items() %} {{ rule }}="{{ value }}"
+                            {% endfor %}
+                        {% endif %}
+                        style="font-family: 'Robot Mono', monospace;" value={{ value }}>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block modal_submit_button %}
+    <button id="submit_script_run" type="button" class="btn btn-success">Run</button>
+{% endblock %}
