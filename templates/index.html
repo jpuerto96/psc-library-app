@@ -35,9 +35,26 @@
         </table>
     </div>
 
-    <button id="add_user_book" type="button" class="btn btn-primary">
-        <i data-feather="plus"></i>
-    </button>
+    <div class="row">
+        <button id="add_user_book" type="button" class="btn btn-primary">
+            <i data-feather="plus"></i>
+        </button>
+        <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i data-feather="send"></i>
+              </button>
+            <div class="dropdown-menu">
+              <div class="p-3" style="width: 400px">
+                <div class="form-group">
+                  <label for="share_email_input">Share List to:</label>
+                  <input type="email" class="form-control" id="share_email_input" placeholder="email@example.com">
+                </div>
+                <button class="btn btn-success" id="share_email">Send</button>
+              </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 {% endblock %}

@@ -1,23 +1,30 @@
 <p>
-    {{ message }}
+    {{ current_user.first_name }} shared their library with you! We hope you can join us <a href="{{ url_for('auth_view_endpoints.signup', _external=True) }}">here</a>!
 </p>
 
-<table>
-    <tr>
-        <th>Title</th>
-        <th>Author</th>
-        <th>D.o.P</th>
-        <th>Favorite?</th>
-    </tr>
-    {{ for book in book_list }}
-        <tr>
-            <td>{{ book.title }}</td>
-            <td>{{ book.author }}</td>
-            <td>{{ book.date_of_purchase }}</td>
-            <td><input type="checkbox" value="
-            {{ if book.is_favorite }}
-                Checked
-            {{ endif }}"></td>
-        </tr>
-    {{ endfor }}
-</table>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>D.o.P</th>
+                <th>Favorite?</th>
+            </tr>
+        </thead>
+        {% for book in user_books_list %}
+            <tr class="user_book_row" data-user_books_id="{{ book.id }}" data-book_id="{{ book.book_id }}">
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.date_of_purchase }}</td>
+                <td>
+                    <input type="checkbox" disabled value="{{ book.is_favorite }}"
+                        {% if book.is_favorite == true %}
+                            checked
+                        {% endif %}
+                    >
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>

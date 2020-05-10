@@ -57,6 +57,13 @@ $(document).ready(function () {
         });
     });
 
+    $document.on('click', '#share_email', function (){
+        let email_to_send = $("#share_email_input").val();
+        $.get("/user/share_user_books/" + email_to_send, function (data) {
+
+        });
+    });
+
     $document.on('click', 'li.no-results', function(){
         let $this = $(this);
         let $bootstrap_select = $this.closest('.bootstrap-select');
