@@ -8,7 +8,6 @@ $(document).ready(function () {
     });
 
     $document.on('click', '#save_user_book', function () {
-        console.log("Called over and over again");
         let $button = $(this);
         $button.prop('disabled', true);
         $button.text('Saving...');
@@ -24,7 +23,7 @@ $(document).ready(function () {
         let modal_type = $("#form-rows").data('modal_type');
 
         let book_id = $(".modal").data("book_id");
-        let user_book_id = $(".modal").data("user_book_id");
+        let user_books_id = $(".modal").data("user_books_id");
 
         $("#form-rows .form-group .form-control:not(div)").each(function () {
             let $form_input = $(this);
@@ -57,7 +56,7 @@ $(document).ready(function () {
                     let response = JSON.parse(data);
                     json['user_books']['book_id'] = response['id'];
                     $.ajax({
-                        url: '/user_books/' + (modal_type=='edit' ? user_book_id : ''),
+                        url: '/user_books/' + (modal_type=='edit' ? user_books_id : ''),
                         method: method,
                         data: JSON.stringify(json['user_books']),
                         success: function(data){
