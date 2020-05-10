@@ -31,7 +31,7 @@
       "parent_table": "user_books"
     },
     "is_favorite": {
-      "description": "Favorite ?",
+      "description": "Favorite?",
       "type": "checkbox",
       "default": false,
       "parent_table": "user_books"
