@@ -1,3 +1,4 @@
+<script src="/static/js/modal.js"></script>
 {% block modal_specific_js %}
 
 {% endblock %}
@@ -19,6 +20,7 @@
                 </div>
                 <div class="modal-footer">
                     {% block modal_submit_button %} {% endblock %}
+                    {% block modal_delete_button %} {% endblock %}
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
