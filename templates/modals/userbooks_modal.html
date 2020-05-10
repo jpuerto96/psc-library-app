@@ -46,8 +46,8 @@
     <button id="save_user_book" type="button" class="btn btn-success">Save</button>
 {% endblock %}
 
-{% if modal_type == 'edit' %}
-    {% block modal_delete_button %}
-<button id="delete_user_book" type="button" class="btn btn-danger">Delete</button>
-    {% endblock %}
-{% endif %}
+{% block modal_delete_button %}
+    {% if modal_type == 'edit' %}
+        <button id="delete_user_book" type="button" class="btn btn-danger">Delete</button>
+    {% endif %}
+{% endblock %}
