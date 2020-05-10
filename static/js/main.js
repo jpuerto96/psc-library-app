@@ -26,7 +26,7 @@ $(document).ready(function () {
                    $select.selectpicker({
                        noneResultsText: 'Click here to add!'
                    });
-                   $select.selectpicker('val', select_val);
+                   $select.val(select_val);
                 });
 
                 $(".modal").modal('show');
