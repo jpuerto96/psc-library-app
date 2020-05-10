@@ -25,7 +25,7 @@ def create_app():
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config[
-        'SQLALCHEMY_DATABASE_URI'] = "mysql://je2l4u8j4406h8t6:yqkud6ud1p49psnd@ijj1btjwrd3b7932.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/srznofy8a4o4oavy"
+        'SQLALCHEMY_DATABASE_URI'] = "mysql://b001ef2190521b:760ab114@us-cdbr-east-06.cleardb.net/heroku_824761ced642879"
     app.config[
         'SECRET_KEY'] = "hello_world!"
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
