@@ -1,0 +1,40 @@
+{
+  "user_books_modal": {
+    "author": {
+      "description": "Book Author",
+      "type": "select",
+      "default": null,
+      "required": true,
+      "dynamic": true,
+      "parent_table": "books"
+    },
+    "title": {
+      "description": "Book Title",
+      "type": "select",
+      "default": null,
+      "required": true,
+      "dynamic": true,
+      "parent_table": "books"
+    },
+    "date_of_purchase": {
+      "description": "Date of Purchase",
+      "type": "date",
+      "default": "today",
+      "required": true,
+      "parent_table": "user_books"
+    },
+    "notes": {
+      "description": "Personal Notes",
+      "type": "textarea",
+      "default": "",
+      "required": true,
+      "parent_table": "user_books"
+    },
+    "is_favorite": {
+      "description": "Favorite ?",
+      "type": "checkbox",
+      "default": false,
+      "parent_table": "user_books"
+    }
+  }
+}
