@@ -42,6 +42,6 @@ class UserBooksModel(db.Model):
             "user_id": self.user_id,
             "book_id": self.book_id,
             "is_favorite": self.is_favorite,
-            "date_of_purchase": self.date_of_purchase,
+            "date_of_purchase": str(self.date_of_purchase),
             "notes": self.notes
         }
