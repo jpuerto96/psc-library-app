@@ -23,14 +23,13 @@ def user_book(user_book_id=None):
         db.session.commit()
         return json.dumps(user_book_object.serialize())
     elif request.method == 'PUT':
-        # TODO: Fix PUT method
         body = request.get_json(force=True)
         user_book_object = UserBooksModel.query.get(int(user_book_id))
-        for key, value in user_book_object.iteritems():
-            if body[key]:
+        for key, value in user_book_object.serialize().items():
+            if key in body:
                 setattr(user_book_object, key, body[key])
         db.session.commit()
-        return json.dumps(user_book_object.serialize)
+        return json.dumps(user_book_object.serialize())
     elif request.method == 'DELETE':
         user_book_object = UserBooksModel.query.get(int(user_book_id))
         db.session.delete(user_book_object)
