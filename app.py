@@ -34,6 +34,8 @@ def create_app():
     app.config['MAIL_USERNAME'] = 'scp.library.app@gmail.com'
     app.config['MAIL_PASSWORD'] = '6u2zjdr8'
     app.config['SECURITY_PASSWORD_SALT'] = 'scplibraryapp'
+    app.jinja_env.trim_blocks = True
+    app.jinja_env.lstrip_blocks = True
 
     login_manager.login_view = 'login'
 
