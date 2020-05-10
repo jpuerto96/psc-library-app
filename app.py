@@ -4,9 +4,10 @@ from flask import Flask, redirect, request
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.pool import QueuePool
 from flask_mail import Mail
 
-db = SQLAlchemy()
+db = SQLAlchemy(engine_options={"pool_size": 10, "poolclass":QueuePool, "pool_pre_ping":True})
 migrate = Migrate()
 login_manager = LoginManager()
 mail = Mail()
