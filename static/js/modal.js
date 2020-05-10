@@ -53,17 +53,24 @@ $(document).ready(function () {
                 method: method,
                 data: JSON.stringify(json['books']),
                 success: function(data){
-                    let response = JSON.parse(data);
-                    json['user_books']['book_id'] = response['id'];
+                    let book_response = JSON.parse(data);
+                    json['user_books']['book_id'] = book_response['id'];
                     $.ajax({
                         url: '/user_books/' + (modal_type=='edit' ? user_books_id : ''),
                         method: method,
                         data: JSON.stringify(json['user_books']),
                         success: function(data){
+                            let user_books_response = JSON.parse(data);
                             $button.empty();
                             $button.text("Success");
                             $(".modal").modal('hide');
-                            // TODO: Update row if PUT, add row if POST
+                            if(method==="PUT"){
+                                update_row($(".user_book_row[data-user_books_id='" + user_books_id +"']"),
+                                user_books_response, book_response);
+                            }
+                            else{
+                                add_new_row(user_books_response, book_response);
+                            }
                         }
                     })
                 }
@@ -89,7 +96,9 @@ $(document).ready(function () {
                     $button.empty();
                     $button.text("Success");
                     $(".modal").modal('hide');
-                    // TODO: Remove row from table
+                    $(".user_book_row[data-user_books_id='" + user_book_id +"']").fadeOut(300, function(){
+                        $(this).remove();
+                    })
                 }
             }
         })
@@ -101,3 +110,35 @@ $(document).ready(function () {
         }
     });
 });
+function add_new_row(user_books_data, books_data){
+    let $table = $("#user_book_list");
+    let $new_tr = $table.find('.template_user_book_row').clone();
+    $new_tr.removeClass('template_user_book_row').addClass('user_book_row');
+
+    update_row($new_tr, user_books_data, books_data);
+
+    $table.find("tbody").append($new_tr);
+    $new_tr.show('slow');
+}
+
+function update_row($tr, user_books_data, books_data){
+    $tr.attr('user_books_id', user_books_data['id']).attr('books_id', books_data['id']);
+    for(let key in user_books_data){
+        let $td = $tr.find("." + key);
+        if($td.length > 0)
+            if(key == 'is_favorite'){
+                let $input = $td.find('input');
+                $input.prop('checked', user_books_data[key]);
+            }
+            else{
+                $td.text(user_books_data[key]);
+            }
+    }
+    for(let key in books_data){
+        let $td = $tr.find("." + key);
+        if($td.length > 0)
+            $td.text(books_data[key]);
+    }
+
+    return $tr;
+}

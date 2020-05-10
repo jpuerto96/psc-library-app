@@ -9,7 +9,7 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-hover">
+        <table class="table table-hover" id="user_book_list">
             <thead>
                 <tr>
                     <th>Title</th>
@@ -18,12 +18,20 @@
                     <th>Favorite?</th>
                 </tr>
             </thead>
+            <tr style="display: none;" class="template_user_book_row" data-user_books_id="" data-book_id="">
+                <td class="title"></td>
+                <td class="author"></td>
+                <td class="date_of_purchase"></td>
+                <td class="is_favorite">
+                    <input type="checkbox" disabled value="">
+                </td>
+            </tr>
             {% for book in book_list %}
                 <tr class="user_book_row" data-user_books_id="{{ book.id }}" data-book_id="{{ book.book_id }}">
-                    <td>{{ book.title }}</td>
-                    <td>{{ book.author }}</td>
-                    <td>{{ book.date_of_purchase }}</td>
-                    <td>
+                    <td class="title">{{ book.title }}</td>
+                    <td class="author">{{ book.author }}</td>
+                    <td class="date_of_purchase">{{ book.date_of_purchase }}</td>
+                    <td class="is_favorite">
                         <input type="checkbox" disabled value="{{ book.is_favorite }}"
                             {% if book.is_favorite == true %}
                                 checked
