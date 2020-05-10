@@ -17,7 +17,10 @@
                         <select id="{{ label }}" data-live-search="true" class="form-control"
                                 data-width="100%" {{ required }} value="{{ value }}">
                             {% for option in field.options %}
-                                <option> {{ option }} </option>
+                                    <option {% if option == value %}
+                                    selected=""
+                                    {% endif %}
+                                    > {{ option }} </option>
                             {% endfor %}
                         </select>
                     {% elif field.type == 'textarea' %}
@@ -34,7 +37,11 @@
                             {% for rule, value in field.validation.items() %} {{ rule }}="{{ value }}"
                             {% endfor %}
                         {% endif %}
-                        style="font-family: 'Robot Mono', monospace;" value={{ value }}>
+                        style="font-family: 'Robot Mono', monospace;" value={{ value }}
+                            {% if field.type == 'checkbox' and value == true %}
+                                checked
+                            {% endif %}
+                        >
                     {% endif %}
                 </div>
             </div>
