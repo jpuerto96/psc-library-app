@@ -12,15 +12,16 @@ app_view_endpoints = Blueprint('app_view_endpoints', __name__)
 @login_required
 def home():
     user_books_list = UserBooksModel.query.join(BooksModel)\
-        .add_columns(BooksModel.title, BooksModel.author,
+        .add_columns(UserBooksModel.id, UserBooksModel.book_id, BooksModel.title, BooksModel.author,
                      UserBooksModel.date_of_purchase, UserBooksModel.notes, UserBooksModel.is_favorite)\
         .filter(UserBooksModel.user_id == current_user.id).all()
     return render_template("index.html", book_list=user_books_list)
 
 
+@app_view_endpoints.route('/modal/user_books/<modal_type>/', methods=['GET'])
 @app_view_endpoints.route('/modal/user_books/<modal_type>/<userbooks_id>', methods=['GET'])
 @login_required
-def user_books_modal(modal_type, userbooks_id):
+def user_books_modal(modal_type, userbooks_id=None):
     modal_template = json.load(open('./static/json_templates/modal_templates.json'))
     user_books_template = modal_template['user_books_modal']
 
