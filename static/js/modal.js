@@ -96,13 +96,6 @@ $(document).ready(function () {
         })
     });
 
-    $document.on('click', 'li.no-results', function(){
-        let $this = $(this);
-        let $bootstrap_select = $this.closest('.bootstrap-select');
-        let val = $bootstrap_select.find('.bs-searchbox>input').val();
-        $bootstrap_select.find('select').append('<option class="new_option" value="'+val+'">' + val + '</option>').selectpicker('refresh').selectpicker('val', val);
-    });
-
     $document.on('change', '#form-rows .form-group .form-control', function () {
         if ($("#save_user_book").hasClass('btn-danger')) {
             $("#save_user_book").removeClass('btn-danger').addClass('btn-success').tooltip('dispose').prop('disabled', false);
