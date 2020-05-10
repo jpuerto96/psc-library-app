@@ -2,34 +2,39 @@
 
 {% block content %}
 
-<h2>{{ current_user.first_name }}'s Library</h2>
+<div class="container-fluid" style="height: 100vh;">
+    <div class="d-flex justify-content-between pt-3 pb-2 mb-3">
+            <h2>{{ current_user.first_name }}'s Library</h2>
+            <p>(<a href="/logout/">logout</a>)</p>
+    </div>
 
-<div class="table-responsive">
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>D.o.P</th>
-            <th>Favorite?</th>
-        </tr>
-    </thead>
-    {% for book in book_list %}
-        <tr>
-            <td>{{ book.title }}</td>
-            <td>{{ book.author }}</td>
-            <td>{{ book.date_of_purchase }}</td>
-            <td><input type="checkbox" disabled value="
-            {% if book.is_favorite %}
-                Checked
-            {% endif %}"></td>
-        </tr>
-    {% endfor %}
-</table>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>D.o.P</th>
+                    <th>Favorite?</th>
+                </tr>
+            </thead>
+            {% for book in book_list %}
+                <tr class="user_book_row" data-user_books_id="{{ book.id }}" data-book_id="{{ book.book_id }}">
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.date_of_purchase }}</td>
+                    <td><input type="checkbox" disabled value="
+                    {% if book.is_favorite %}
+                        Checked
+                    {% endif %}"></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 
-
-<button type="button" class="btn btn-primary btn-add-form-row"><i data-feather="plus"></i>
-                    </button>
+    <button id="add_user_book" type="button" class="btn btn-primary">
+        <i data-feather="plus"></i>
+    </button>
 </div>
 
 {% endblock %}
