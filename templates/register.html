@@ -1,18 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title> Library </title>
+{% extends "base_templates/base.html" %}
 
-</head>
-<body style="background: #b3b3b3">
+{% block content %}
 
 <div class="container-fluid" style="height: 100vh;">
     <div class="row justify-content-center align-items-center h-100">
-        <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3" style="background: white; opacity: .9;">
-            <h1>A confirmation e-mail has been sent to you. Please confirm your account through that e-mail.</h1>
+        <div class="col-6">
+            <h1>A confirmation e-mail has been sent to you.</h1>
+            <br>
+            <h3>Please confirm your account through that e-mail.</h3>
         </div>
     </div>
 </div>
 
-</body>
-</html>
+{% endblock %}
