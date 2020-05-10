@@ -4,4 +4,32 @@
 
 <h2>{{ current_user.first_name }}'s Library</h2>
 
+<div class="table-responsive">
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>D.o.P</th>
+            <th>Favorite?</th>
+        </tr>
+    </thead>
+    {% for book in book_list %}
+        <tr>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.date_of_purchase }}</td>
+            <td><input type="checkbox" disabled value="
+            {% if book.is_favorite %}
+                Checked
+            {% endif %}"></td>
+        </tr>
+    {% endfor %}
+</table>
+
+
+<button type="button" class="btn btn-primary btn-add-form-row"><i data-feather="plus"></i>
+                    </button>
+</div>
+
 {% endblock %}
