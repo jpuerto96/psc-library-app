@@ -87,6 +87,10 @@ def register(registration_token=None):
     """
     Function that loads registration page, and registers user when following e-mail.
     """
+    # If user is already logged in, send them home
+    if current_user.is_authenticated:
+        return redirect(url_for('app_view_endpoints.home'))
+
     if registration_token is None:
         # If they are being sent here with no token, generate a token and send them e-mail
         token = get_token(current_user.email)
