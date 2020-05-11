@@ -4,6 +4,10 @@ from app import db
 class BooksModel(db.Model):
     __tablename__ = 'books'
 
+    __table_args__ = (
+        db.UniqueConstraint('title', 'author', name='unique_title_author'),
+    )
+
     id = db.Column(db.Integer,
                    primary_key=True)
     title = db.Column(db.String(200),
