@@ -92,7 +92,7 @@ def register(registration_token=None):
         token = get_token(current_user.email)
         registration_url = url_for('auth_view_endpoints.register', registration_token=token, _external=True)
         template = render_template('email_templates/registration_email.html', registration_url=registration_url)
-        send_email("SCP Library Registration", current_user.email, template)
+        send_email("PSC Library Registration", current_user.email, template)
         logout_user()
         return render_template('register.html')
     else:
