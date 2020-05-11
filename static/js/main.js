@@ -22,7 +22,7 @@ $(document).ready(function () {
                 // For each of the selects, we need to initialize them as selectpickers and then reset the value that existed before we did the reset
                 $(".modal select").each(function (i) {
                     let $select = $(this);
-                    let select_val = $select.val();c
+                    let select_val = $select.val();
                     $select.selectpicker({
                         noneResultsText: 'Click here to add!'
                     });
