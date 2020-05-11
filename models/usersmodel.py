@@ -43,12 +43,21 @@ class UsersModel(UserMixin, db.Model):
     books = db.relationship("UserBooksModel", back_populates="user")
 
     def generate_password_hash(self, password):
+        """
+        Function used to set the password_hash for a user.
+        """
         self.password_hash = generate_password_hash(password, method='sha256')
 
     def is_valid_password(self, password):
+        """
+        Function used to check whether password matches stored password_hash.
+        """
         return check_password_hash(self.password_hash, password)
 
     def serialize(self):
+        """
+        Helper function used to transform db.Model into dict. Useful for JSON serialization.
+        """
         return {
             "id": self.id,
             "first_name": self.first_name,

@@ -14,6 +14,10 @@ app_view_endpoints = Blueprint('app_view_endpoints', __name__)
 @app_view_endpoints.route('/', methods=['GET'])
 @login_required
 def home():
+    """
+    Function that returns the home page.
+    """
+    # Grab user books for the current user.
     user_books_list = UserBooksModel.query.join(BooksModel) \
         .add_columns(UserBooksModel.id, UserBooksModel.book_id, BooksModel.title, BooksModel.author,
                      UserBooksModel.date_of_purchase, UserBooksModel.notes, UserBooksModel.is_favorite) \
@@ -25,14 +29,20 @@ def home():
 @app_view_endpoints.route('/modal/user_books/<modal_type>/<userbooks_id>', methods=['GET'])
 @login_required
 def user_books_modal(modal_type, userbooks_id=None):
+    """
+    Function that returns the modal to display.
+    """
+    # Load the json template for this modal
     modal_template = json.load(open('./static/json_templates/modal_templates.json'))
     user_books_template = modal_template['user_books_modal']
 
+    # Load the user book data
     userbook = UserBooksModel.query.join(BooksModel) \
         .add_columns(BooksModel.title, BooksModel.author,
                      UserBooksModel.date_of_purchase, UserBooksModel.notes, UserBooksModel.is_favorite) \
         .filter(UserBooksModel.id == userbooks_id).first() if modal_type == "edit" else {}
 
+    # Generate the options for the selects.
     user_books_template['author']['options'] = []
     for author in db.session.query(BooksModel.author).distinct():
         user_books_template['author']['options'].append(author.author)

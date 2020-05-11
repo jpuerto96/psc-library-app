@@ -58,7 +58,7 @@ $(document).ready(function () {
 
     $document.on('click', '#share_email', function () {
         let email_to_send = $("#share_email_input").val();
-        $.get("/user/share_user_books/" + email_to_send, function (data) {
+        $.get("/user_books/share_user_books/" + email_to_send, function (data) {
 
         });
     });

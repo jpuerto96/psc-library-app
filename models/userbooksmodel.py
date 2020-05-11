@@ -41,6 +41,9 @@ class UserBooksModel(db.Model):
     book = db.relationship("BooksModel", back_populates="users")
 
     def serialize(self):
+        """
+        Helper function used to transform db.Model into dict. Useful for JSON serialization.
+        """
         return {
             "id": self.id,
             "user_id": self.user_id,
