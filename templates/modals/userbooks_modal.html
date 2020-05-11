@@ -29,8 +29,7 @@
                                 {% for rule, value in field.validation.items() %} {{ rule }}="{{ value }}"
                                 {% endfor %}
                             {% endif %}
-                            style="font-family: 'Robot Mono', monospace;">{{ value }}
-                        </textarea>
+                            style="font-family: 'Robot Mono', monospace;">{{ value }}</textarea>
                     {% else %}
                         <input id="{{ label }}" class="form-control" type="{{ field.type }}" {{ required }}
                         {% if 'validation' in field %}
