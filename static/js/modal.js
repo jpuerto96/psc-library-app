@@ -7,7 +7,7 @@ $(document).ready(function () {
         $select.append('<option>'+ new_option +'</option>').selectpicker('refresh');
     });
 
-    $document.on('click', '#save_user_book', function () {
+    $document.off('click', '#save_user_book').on('click', '#save_user_book', function () {
         let $button = $(this);
         $button.prop('disabled', true);
         $button.text('Saving...');
@@ -81,7 +81,7 @@ $(document).ready(function () {
 
     });
 
-    $document.on('click', '#delete_user_book', function(){
+    $document.off('click', '#delete_user_book').on('click', '#delete_user_book', function(){
         let $button = $(this);
         let user_book_id = $('.modal').data('user_books_id');
         $button.prop('disabled', true);
