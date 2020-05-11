@@ -29,3 +29,6 @@ Additionally, much of the existing modal functionality is built around a modular
 Although the existing route that loads the modal is static, the concept would be to replace the `user_books` portion of the route `(/modal/user_books/<modal_type>/)` with the class of the modal that you would like to load. 
 The appropriate JSON template would then be loaded, based on the passed class. 
 This would then be pushed through to the Jinja2 template (as it currently functions) so that the fields are automatically created, as they currently are.
+
+Security-wise, all of the configuration variables should be moved to environment variables and/or an un-tracked local config.json file to avoid issues when in production.
+They were left within app.py to avoid issues when reviewing/attempting to run the project from a new machine.
