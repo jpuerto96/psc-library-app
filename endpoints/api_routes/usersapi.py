@@ -22,6 +22,4 @@ def share_user_books(email_to_send):
 
     email.send_email(current_user.first_name + "'s library!", email_to_send, template)
 
-    current_app.logger.error(email_to_send)
-
     return json.dumps({"success": True})
