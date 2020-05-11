@@ -25,13 +25,13 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config[
         'SQLALCHEMY_DATABASE_URI'] = "mysql://b001ef2190521b:760ab114@us-cdbr-east-06.cleardb.net/heroku_824761ced642879"
-    app.config['SECRET_KEY'] = "scplibraryapp"
+    app.config['SECRET_KEY'] = "psclibraryapp"
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
     app.config['MAIL_PORT'] = 465
     app.config['MAIL_USE_SSL'] = True
-    app.config['MAIL_USERNAME'] = 'scp.library.app@gmail.com'
-    app.config['MAIL_PASSWORD'] = '6u2zjdr8'
-    app.config['SECURITY_PASSWORD_SALT'] = 'scplibraryapp'
+    app.config['MAIL_USERNAME'] = 'psc.library.app@gmail.com'
+    app.config['MAIL_PASSWORD'] = '9z8ve6zf'
+    app.config['SECURITY_PASSWORD_SALT'] = 'psclibraryapp'
     app.jinja_env.trim_blocks = True
     app.jinja_env.lstrip_blocks = True
 
