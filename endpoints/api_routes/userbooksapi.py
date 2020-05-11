@@ -8,13 +8,12 @@ from models.userbooksmodel import UserBooksModel
 user_books_api_endpoints = Blueprint('user_books_api_endpoints', __name__)
 
 
-@user_books_api_endpoints.route('/user_books/', methods=['GET', 'POST'])
+@user_books_api_endpoints.route('/user_books/', methods=['POST'])
 @user_books_api_endpoints.route('/user_books/<user_book_id>', methods=['GET', 'PUT', 'DELETE'])
 @login_required
 def user_book(user_book_id=None):
     if request.method == 'GET':
-        return json.dumps(UserBooksModel.query.get(int(user_book_id)) if user_book_id
-                          else UserBooksModel.query.filter_by(request.get_json()).all())
+        return json.dumps(UserBooksModel.query.get(int(user_book_id)))
     elif request.method == 'POST':
         body = request.get_json(force=True)
         body['user_id'] = current_user.id

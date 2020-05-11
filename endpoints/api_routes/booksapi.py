@@ -8,16 +8,15 @@ from models.booksmodel import BooksModel
 books_api_endpoints = Blueprint('books_api_endpoints', __name__)
 
 
-@books_api_endpoints.route('/books/', methods=['GET', 'POST'])
+@books_api_endpoints.route('/books/', methods=['POST'])
 @books_api_endpoints.route('/books/<book_id>', methods=['GET', 'PUT'])
 @login_required
 def book(book_id=None):
     if request.method == 'GET':
-        return json.dumps(BooksModel.query.get(int(book_id)) if book_id
-                          else BooksModel.query.filter_by(request.get_json()).all())
+        return json.dumps(BooksModel.query.get(int(book_id)))
     elif request.method == 'POST':
         body = request.get_json(force=True)
-        existing_book_object = BooksModel.query.filter_by(body).first()
+        existing_book_object = BooksModel.query.filter_by(**body).first()
         if existing_book_object:
             return json.dumps(existing_book_object.serialize())
         book_object = BooksModel(**body)
