@@ -15,13 +15,14 @@ $(document).ready(function () {
 
         if (!$table.hasClass('loading')) {
             $table.addClass('loading').removeClass('table-hover');
+            // Grab the modal
             $.get("/modal/user_books/edit/" + user_books_id, function (data) {
                 $('body').append(data);
 
-                //for each of the selects, we need to initialize them as selectpickers and then reset the value that existed before we did the reset
+                // For each of the selects, we need to initialize them as selectpickers and then reset the value that existed before we did the reset
                 $(".modal select").each(function (i) {
                     let $select = $(this);
-                    let select_val = $select.val();
+                    let select_val = $select.val();c
                     $select.selectpicker({
                         noneResultsText: 'Click here to add!'
                     });
@@ -30,6 +31,7 @@ $(document).ready(function () {
 
                 $(".modal").modal('show');
 
+                // Set data attr on the modal.
                 $(".modal").data('user_books_id', user_books_id);
                 $(".modal").data('book_id', book_id);
 
@@ -40,12 +42,14 @@ $(document).ready(function () {
     });
 
     $document.on('click', '#add_user_book', function () {
+        // Load modal
         $.get("/modal/user_books/create/", function (data) {
             $('body').append(data);
 
-            //for each of the selects, we need to initialize them as selectpickers and then reset the value that existed before we did the reset
+            //for each of the selects, we need to initialize them as selectpickers.
             $(".modal select").each(function (i) {
                 $(this).val('').selectpicker({
+                    // Change text to be more descriptive for what we need.
                     noneResultsText: 'Click here to add!'
                 });
             });
@@ -58,16 +62,10 @@ $(document).ready(function () {
 
     $document.on('click', '#share_email', function () {
         let email_to_send = $("#share_email_input").val();
+        // Send e-mail
         $.get("/user_books/share_user_books/" + email_to_send, function (data) {
 
         });
-    });
-
-    $document.on('click', 'li.no-results', function () {
-        let $this = $(this);
-        let $bootstrap_select = $this.closest('.bootstrap-select');
-        let val = $bootstrap_select.find('.bs-searchbox>input').val();
-        $bootstrap_select.find('select').append('<option class="new_option" value="' + val + '">' + val + '</option>').selectpicker('refresh').selectpicker('val', val);
     });
     //END ADD LISTENERS REGION
 });
