@@ -32,10 +32,12 @@
                 <td class="author">{{ book.author }}</td>
                 <td class="date_of_purchase">{{ book.date_of_purchase }}</td>
                 <td class="is_favorite">
-                    <input %} %} book.is_favorite==
-                           checked disabled endif if true
+                    <input {% if book.is_favorite == true %}
+                           checked
+                           {% endif %}
+                           disabled
                            type="checkbox"
-                           value="{{ book.is_favorite }}" {% {%
+                           value="{{ book.is_favorite }}"
                     >
                 </td>
             </tr>
