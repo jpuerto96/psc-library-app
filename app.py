@@ -20,7 +20,7 @@ def create_app():
     app = Flask(__name__)
 
     from endpoints.view_routes import authview, appview
-    from endpoints.api_routes import usersapi, booksapi, userbooksapi
+    from endpoints.api_routes import booksapi, userbooksapi
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config[
@@ -40,7 +40,6 @@ def create_app():
     app.register_blueprint(authview.auth_view_endpoints)
     app.register_blueprint(appview.app_view_endpoints)
 
-    app.register_blueprint(usersapi.users_api_endpoints)
     app.register_blueprint(booksapi.books_api_endpoints)
     app.register_blueprint(userbooksapi.user_books_api_endpoints)
 
@@ -48,10 +47,6 @@ def create_app():
     migrate.init_app(app, db)
     login_manager.init_app(app)
     mail.init_app(app)
-
-    # Error page routes
-    # app.register_error_handler(403, page_bad_permissions)
-    # app.register_error_handler(404, page_bad_route)
 
     gunicorn_logger = logging.getLogger('gunicorn.error')
     app.logger.handlers = gunicorn_logger.handlers
@@ -62,6 +57,9 @@ def create_app():
 
 @login_manager.user_loader
 def load_user(user_id):
+    """
+    Helper function used by login_manager to load a user record.
+    """
     from models.usersmodel import UsersModel
     if user_id is not None:
         return UsersModel.query.get(int(user_id))
@@ -70,6 +68,9 @@ def load_user(user_id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
+    """
+    Helper function used by login_manager to redirect an unauthorized user.
+    """
     return redirect('/login?next=' + request.path)
 
 
