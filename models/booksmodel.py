@@ -8,7 +8,7 @@ class BooksModel(db.Model):
                    primary_key=True)
     title = db.Column(db.String(200),
                       index=True,
-                      unique=True,
+                      unique=False,
                       nullable=False)
     author = db.Column(db.String(64),
                        index=True,
