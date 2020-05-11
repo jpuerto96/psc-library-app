@@ -26,7 +26,7 @@ def create_app():
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://b001ef2190521b:760ab114@us-cdbr-east-06.cleardb.net/heroku_824761ced642879"
-    app.config['SECRET_KEY'] = "hello_world!"
+    app.config['SECRET_KEY'] = "scplibraryapp"
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
     app.config['MAIL_PORT'] = 465
     app.config['MAIL_USE_SSL'] = True

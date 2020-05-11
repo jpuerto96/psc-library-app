@@ -46,15 +46,15 @@ $(document).ready(function () {
         });
 
         if (valid) {
-            let method = modal_type === 'edit' ? 'PUT' : 'POST';
 
             $.ajax({
                 url: '/books/' + (modal_type === 'edit' ? book_id : ''),
-                method: method,
+                method: "POST",
                 data: JSON.stringify(json['books']),
                 success: function(data){
                     let book_response = JSON.parse(data);
                     json['user_books']['book_id'] = book_response['id'];
+                    let method = modal_type === 'edit' ? 'PUT' : 'POST';
                     $.ajax({
                         url: '/user_books/' + (modal_type=='edit' ? user_books_id : ''),
                         method: method,

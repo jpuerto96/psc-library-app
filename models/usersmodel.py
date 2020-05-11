@@ -38,7 +38,7 @@ class UsersModel(UserMixin, db.Model):
                       index=False,
                       unique=False,
                       nullable=False,
-                      default='Patron')
+                      default='User')
 
     books = db.relationship("UserBooksModel", back_populates="user")
 

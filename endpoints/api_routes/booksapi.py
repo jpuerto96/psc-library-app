@@ -17,6 +17,9 @@ def book(book_id=None):
                           else BooksModel.query.filter_by(request.get_json()).all())
     elif request.method == 'POST':
         body = request.get_json(force=True)
+        existing_book_object = BooksModel.query.filter_by(body).first()
+        if existing_book_object:
+            return json.dumps(existing_book_object.serialize())
         book_object = BooksModel(**body)
         db.session.add(book_object)
         db.session.commit()
