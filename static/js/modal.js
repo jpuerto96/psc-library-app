@@ -45,8 +45,10 @@ $(document).ready(function () {
 
             if ($form_input.is(':checkbox')) {
                 json[parent_table][form_input_id] = $form_input.is(":checked");
-            } else if ($form_input.attr('type') !== 'search') {
+            } else if ($form_input.attr('type') === 'date'){
                 json[parent_table][form_input_id] = $form_input.val();
+            } else if($form_input.attr('type') !== 'search') {
+                json[parent_table][form_input_id] = $form_input.val().trim();
             }
         });
 
