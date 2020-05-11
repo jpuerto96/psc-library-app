@@ -3,13 +3,13 @@
 
 {% endblock %}
 
-<div class="modal fade" tabindex="-1" role="dialog">
+<div class="modal fade" role="dialog" tabindex="-1">
     <form id="{% block modal_id %}{% endblock %}">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="modal-title"> {% block modal_title %} {% endblock %}</h2>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -21,7 +21,7 @@
                 <div class="modal-footer">
                     {% block modal_submit_button %} {% endblock %}
                     {% block modal_delete_button %} {% endblock %}
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@ $(document).ready(function () {
     $document.on('click', '.bootstrap-select li.no-results', function () {
         let new_option = $(this).text().split('"')[1];
         let $select = $(this).closest('.bootstrap-select');
-        $select.append('<option>'+ new_option +'</option>').selectpicker('refresh');
+        $select.append('<option>' + new_option + '</option>').selectpicker('refresh');
     });
 
     $document.off('click', '#save_user_book').on('click', '#save_user_book', function () {
@@ -40,7 +40,7 @@ $(document).ready(function () {
 
             if ($form_input.is(':checkbox')) {
                 json[parent_table][form_input_id] = $form_input.is(":checked");
-            } else if($form_input.attr('type') !== 'search') {
+            } else if ($form_input.attr('type') !== 'search') {
                 json[parent_table][form_input_id] = $form_input.val();
             }
         });
@@ -48,27 +48,33 @@ $(document).ready(function () {
         if (valid) {
 
             $.ajax({
-                url: '/books/' + (modal_type === 'edit' ? book_id : ''),
+                url: '/books/',
                 method: "POST",
                 data: JSON.stringify(json['books']),
-                success: function(data){
+                success: function (data) {
                     let book_response = JSON.parse(data);
                     json['user_books']['book_id'] = book_response['id'];
                     let method = modal_type === 'edit' ? 'PUT' : 'POST';
                     $.ajax({
-                        url: '/user_books/' + (modal_type=='edit' ? user_books_id : ''),
+                        url: '/user_books/' + (modal_type == 'edit' ? user_books_id : ''),
                         method: method,
                         data: JSON.stringify(json['user_books']),
-                        success: function(data){
+                        success: function (data) {
                             let user_books_response = JSON.parse(data);
+                            if (user_books_response['message'] !== undefined) {
+                                $button.prop('disabled', false);
+                                $button.empty();
+                                $button.removeClass('btn-success').addClass('btn-danger').text("Save");
+                                $button.tooltip({"title": user_books_response['message']}).tooltip('show');
+                                return;
+                            }
                             $button.empty();
                             $button.text("Success");
                             $(".modal").modal('hide');
-                            if(method==="PUT"){
-                                update_row($(".user_book_row[data-user_books_id='" + user_books_id +"']"),
-                                user_books_response, book_response);
-                            }
-                            else{
+                            if (method === "PUT") {
+                                update_row($(".user_book_row[data-user_books_id='" + user_books_id + "']"),
+                                    user_books_response, book_response);
+                            } else {
                                 add_new_row(user_books_response, book_response);
                             }
                         }
@@ -81,7 +87,7 @@ $(document).ready(function () {
 
     });
 
-    $document.off('click', '#delete_user_book').on('click', '#delete_user_book', function(){
+    $document.off('click', '#delete_user_book').on('click', '#delete_user_book', function () {
         let $button = $(this);
         let user_book_id = $('.modal').data('user_books_id');
         $button.prop('disabled', true);
@@ -90,13 +96,13 @@ $(document).ready(function () {
         $.ajax({
             url: "/user_books/" + user_book_id,
             method: 'DELETE',
-            success: function(data){
+            success: function (data) {
                 let response = JSON.parse(data);
-                if (response['success']){
+                if (response['success']) {
                     $button.empty();
                     $button.text("Success");
                     $(".modal").modal('hide');
-                    $(".user_book_row[data-user_books_id='" + user_book_id +"']").fadeOut(300, function(){
+                    $(".user_book_row[data-user_books_id='" + user_book_id + "']").fadeOut(300, function () {
                         $(this).remove();
                     })
                 }
@@ -110,7 +116,8 @@ $(document).ready(function () {
         }
     });
 });
-function add_new_row(user_books_data, books_data){
+
+function add_new_row(user_books_data, books_data) {
     let $table = $("#user_book_list");
     let $new_tr = $table.find('.template_user_book_row').clone();
     $new_tr.removeClass('template_user_book_row').addClass('user_book_row');
@@ -121,22 +128,21 @@ function add_new_row(user_books_data, books_data){
     $new_tr.show('slow');
 }
 
-function update_row($tr, user_books_data, books_data){
-    $tr.attr('user_books_id', user_books_data['id']).attr('books_id', books_data['id']);
-    for(let key in user_books_data){
+function update_row($tr, user_books_data, books_data) {
+    $tr.attr('data-user_books_id', user_books_data['id']).attr('data-book_id', books_data['id']);
+    for (let key in user_books_data) {
         let $td = $tr.find("." + key);
-        if($td.length > 0)
-            if(key == 'is_favorite'){
+        if ($td.length > 0)
+            if (key == 'is_favorite') {
                 let $input = $td.find('input');
                 $input.prop('checked', user_books_data[key]);
-            }
-            else{
+            } else {
                 $td.text(user_books_data[key]);
             }
     }
-    for(let key in books_data){
+    for (let key in books_data) {
         let $td = $tr.find("." + key);
-        if($td.length > 0)
+        if ($td.length > 0)
             $td.text(books_data[key]);
     }
 

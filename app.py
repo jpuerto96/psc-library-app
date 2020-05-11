@@ -2,12 +2,12 @@ import logging
 
 from flask import Flask, redirect, request
 from flask_login import LoginManager
+from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.pool import QueuePool
-from flask_mail import Mail
 
-db = SQLAlchemy(engine_options={"pool_size": 10, "poolclass":QueuePool, "pool_pre_ping":True})
+db = SQLAlchemy(engine_options={"pool_size": 10, "poolclass": QueuePool, "pool_pre_ping": True})
 migrate = Migrate()
 login_manager = LoginManager()
 mail = Mail()
@@ -22,10 +22,9 @@ def create_app():
     from endpoints.view_routes import authview, appview
     from endpoints.api_routes import usersapi, booksapi, userbooksapi
 
-    from models import usersmodel, booksmodel, userbooksmodel
-
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://b001ef2190521b:760ab114@us-cdbr-east-06.cleardb.net/heroku_824761ced642879"
+    app.config[
+        'SQLALCHEMY_DATABASE_URI'] = "mysql://b001ef2190521b:760ab114@us-cdbr-east-06.cleardb.net/heroku_824761ced642879"
     app.config['SECRET_KEY'] = "scplibraryapp"
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
     app.config['MAIL_PORT'] = 465

@@ -2,10 +2,10 @@ from flask import Blueprint, redirect, url_for, render_template, request, flash
 from flask_login import current_user, login_user, logout_user
 
 from app import db
-from plugins.forms import UserLoginForm, UserSignupForm
 from models.usersmodel import UsersModel
-from plugins.tokenizer import get_token, is_valid_token
 from plugins.email import send_email
+from plugins.forms import UserLoginForm, UserSignupForm
+from plugins.tokenizer import get_token, is_valid_token
 
 auth_view_endpoints = Blueprint('auth_view_endpoints', __name__)
 

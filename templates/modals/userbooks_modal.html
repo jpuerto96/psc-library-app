@@ -5,56 +5,58 @@
 {% block modal_title %}{{ modal_type }} Book{% endblock %}
 
 {% block content %}
-    <div id="form-rows" data-modal_type="{{ modal_type }}">
-        {% for label, field in modal_template.items() %}
-            {% set value = modal_data[label] if modal_data[label] else field['default'] %}
-            <div class="form-group row" data-parent_table="{{ field.parent_table }}" style="margin-bottom: 10px; margin-top: 10px;">
-                {% set required = "required" if field.required else "" %}
-                <label class="col-md-6 {{ required }}"
-                       for="{{ label }}"> {{ field.description }} </label>
-                <div class="col-md-6">
-                    {% if field.type == 'select' %}
-                        <select id="{{ label }}" data-live-search="true" class="form-control"
-                                data-width="100%" {{ required }} value="{{ value }}">
-                            {% for option in field.options %}
-                                    <option {% if option == value %}
-                                    selected=""
-                                    {% endif %}
-                                    > {{ option }} </option>
-                            {% endfor %}
-                        </select>
-                    {% elif field.type == 'textarea' %}
-                        <textarea id="{{ label }}" class="form-control" {{ required }}
-                            {% if 'validation' in field %}
-                                {% for rule, value in field.validation.items() %} {{ rule }}="{{ value }}"
-                                {% endfor %}
-                            {% endif %}
-                            style="font-family: 'Robot Mono', monospace;">{{ value }}
-                        </textarea>
-                    {% else %}
-                        <input id="{{ label }}" class="form-control" type="{{ field.type }}" {{ required }}
-                        {% if 'validation' in field %}
-                            {% for rule, value in field.validation.items() %} {{ rule }}="{{ value }}"
-                            {% endfor %}
-                        {% endif %}
-                        style="font-family: 'Robot Mono', monospace;" value={{ value }}
-                            {% if field.type == 'checkbox' and value == true %}
-                                checked
-                            {% endif %}
-                        >
-                    {% endif %}
-                </div>
-            </div>
-        {% endfor %}
+<div data-modal_type="{{ modal_type }}" id="form-rows">
+    {% for label, field in modal_template.items() %}
+    {% set value = modal_data[label] if modal_data[label] else field['default'] %}
+    <div class="form-group row" data-parent_table="{{ field.parent_table }}"
+         style="margin-bottom: 10px; margin-top: 10px;">
+        {% set required = "required" if field.required else "" %}
+        <label class="col-md-6 {{ required }}"
+               for="{{ label }}"> {{ field.description }} </label>
+        <div class="col-md-6">
+            {% if field.type == 'select' %}
+            <select class="form-control" data-live-search="true" data-width="100%"
+                    id="{{ label }}" required value="{{ value }}" {{ }}>
+                {% for option in field.options %}
+                <option %} %} endif if option==
+                        selected=""
+                        value {% {%
+                > {{ option }}
+                </option>
+                {% endfor %}
+            </select>
+            {% elif field.type == 'textarea' %}
+            <textarea class="form-control" id="{{ label }}" if required {%
+                      {{ }} 'validation' in field %}
+            {% for rule, value in field.validation.items() %} {{ rule }}="{{ value }}"
+            {% endfor %}
+            {% endif %}
+            style="font-family: 'Robot Mono', monospace;">{{ value }}
+            </textarea>
+            {% else %}
+            <input class="form-control" id="{{ label }}" if required type="{{ field.type }}" {%
+                   {{ }} 'validation' in field %}
+            {% for rule, value in field.validation.items() %} {{ rule }}="{{ value }}"
+            {% endfor %}
+            {% endif %}
+            style="font-family: 'Robot Mono', monospace;" value={{ value }}
+            {% if field.type == 'checkbox' and value == true %}
+            checked
+            {% endif %}
+            >
+            {% endif %}
+        </div>
     </div>
+    {% endfor %}
+</div>
 {% endblock %}
 
 {% block modal_submit_button %}
-    <button id="save_user_book" type="button" class="btn btn-success">Save</button>
+<button class="btn btn-success" id="save_user_book" type="button">Save</button>
 {% endblock %}
 
 {% block modal_delete_button %}
-    {% if modal_type == 'edit' %}
-        <button id="delete_user_book" type="button" class="btn btn-danger">Delete</button>
-    {% endif %}
+{% if modal_type == 'edit' %}
+<button class="btn btn-danger" id="delete_user_book" type="button">Delete</button>
+{% endif %}
 {% endblock %}

@@ -4,61 +4,62 @@
 
 <div class="container-fluid" style="height: 100vh;">
     <div class="d-flex justify-content-between pt-3 pb-2 mb-3">
-            <h2>{{ current_user.first_name }}'s Library</h2>
-            <p>(<a href="/logout/">logout</a>)</p>
+        <h2>{{ current_user.first_name }}'s Library</h2>
+        <p>(<a href="/logout/">logout</a>)</p>
     </div>
 
     <div class="table-responsive">
         <table class="table table-hover" id="user_book_list">
             <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>D.o.P</th>
-                    <th>Favorite?</th>
-                </tr>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>D.o.P</th>
+                <th>Favorite?</th>
+            </tr>
             </thead>
-            <tr style="display: none;" class="template_user_book_row" data-user_books_id="" data-book_id="">
+            <tr class="template_user_book_row" data-book_id="" data-user_books_id="" style="display: none;">
                 <td class="title"></td>
                 <td class="author"></td>
                 <td class="date_of_purchase"></td>
                 <td class="is_favorite">
-                    <input type="checkbox" disabled value="">
+                    <input disabled type="checkbox" value="">
                 </td>
             </tr>
             {% for book in book_list %}
-                <tr class="user_book_row" data-user_books_id="{{ book.id }}" data-book_id="{{ book.book_id }}">
-                    <td class="title">{{ book.title }}</td>
-                    <td class="author">{{ book.author }}</td>
-                    <td class="date_of_purchase">{{ book.date_of_purchase }}</td>
-                    <td class="is_favorite">
-                        <input type="checkbox" disabled value="{{ book.is_favorite }}"
-                            {% if book.is_favorite == true %}
-                                checked
-                            {% endif %}
-                        >
-                    </td>
-                </tr>
+            <tr class="user_book_row" data-book_id="{{ book.book_id }}" data-user_books_id="{{ book.id }}">
+                <td class="title">{{ book.title }}</td>
+                <td class="author">{{ book.author }}</td>
+                <td class="date_of_purchase">{{ book.date_of_purchase }}</td>
+                <td class="is_favorite">
+                    <input %} %} book.is_favorite==
+                           checked disabled endif if true
+                           type="checkbox"
+                           value="{{ book.is_favorite }}" {% {%
+                    >
+                </td>
+            </tr>
             {% endfor %}
         </table>
     </div>
 
     <div class="row">
-        <button id="add_user_book" type="button" class="btn btn-primary">
+        <button class="btn btn-primary" id="add_user_book" type="button">
             <i data-feather="plus"></i>
         </button>
         <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button aria-expanded="false" aria-haspopup="true" class="btn dropdown-toggle" data-toggle="dropdown"
+                    id="dropdownMenuButton" type="button">
                 <i data-feather="send"></i>
-              </button>
+            </button>
             <div class="dropdown-menu">
-              <div class="p-3" style="width: 400px">
-                <div class="form-group">
-                  <label for="share_email_input">Share List to:</label>
-                  <input type="email" class="form-control" id="share_email_input" placeholder="email@example.com">
+                <div class="p-3" style="width: 400px">
+                    <div class="form-group">
+                        <label for="share_email_input">Share List to:</label>
+                        <input class="form-control" id="share_email_input" placeholder="email@example.com" type="email">
+                    </div>
+                    <button class="btn btn-success" id="share_email">Send</button>
                 </div>
-                <button class="btn btn-success" id="share_email">Send</button>
-              </div>
             </div>
         </div>
 

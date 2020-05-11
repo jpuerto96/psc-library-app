@@ -1,12 +1,11 @@
-from flask import Blueprint, url_for, render_template, request, current_app, Response
-from flask_login import current_user, login_required
-from models.userbooksmodel import UserBooksModel
-from models.booksmodel import BooksModel
-from plugins import email
 import json
 
-from app import db
+from flask import Blueprint, render_template, current_app
+from flask_login import current_user, login_required
+
+from models.booksmodel import BooksModel
 from models.userbooksmodel import UserBooksModel
+from plugins import email
 
 users_api_endpoints = Blueprint('users_api_endpoints', __name__)
 

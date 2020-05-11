@@ -19,13 +19,13 @@ $(document).ready(function () {
                 $('body').append(data);
 
                 //for each of the selects, we need to initialize them as selectpickers and then reset the value that existed before we did the reset
-                $(".modal select").each(function(i){
-                   let $select = $(this);
-                   let select_val = $select.val();
-                   $select.selectpicker({
-                       noneResultsText: 'Click here to add!'
-                   });
-                   $select.val(select_val);
+                $(".modal select").each(function (i) {
+                    let $select = $(this);
+                    let select_val = $select.val();
+                    $select.selectpicker({
+                        noneResultsText: 'Click here to add!'
+                    });
+                    $select.val(select_val);
                 });
 
                 $(".modal").modal('show');
@@ -39,15 +39,15 @@ $(document).ready(function () {
         }
     });
 
-    $document.on('click', '#add_user_book', function (){
+    $document.on('click', '#add_user_book', function () {
         $.get("/modal/user_books/create/", function (data) {
             $('body').append(data);
 
             //for each of the selects, we need to initialize them as selectpickers and then reset the value that existed before we did the reset
-            $(".modal select").each(function(i){
-               $(this).val('').selectpicker({
-                   noneResultsText: 'Click here to add!'
-               });
+            $(".modal select").each(function (i) {
+                $(this).val('').selectpicker({
+                    noneResultsText: 'Click here to add!'
+                });
             });
 
             $(".modal").modal('show');
@@ -56,18 +56,18 @@ $(document).ready(function () {
         });
     });
 
-    $document.on('click', '#share_email', function (){
+    $document.on('click', '#share_email', function () {
         let email_to_send = $("#share_email_input").val();
         $.get("/user/share_user_books/" + email_to_send, function (data) {
 
         });
     });
 
-    $document.on('click', 'li.no-results', function(){
+    $document.on('click', 'li.no-results', function () {
         let $this = $(this);
         let $bootstrap_select = $this.closest('.bootstrap-select');
         let val = $bootstrap_select.find('.bs-searchbox>input').val();
-        $bootstrap_select.find('select').append('<option class="new_option" value="'+val+'">' + val + '</option>').selectpicker('refresh').selectpicker('val', val);
+        $bootstrap_select.find('select').append('<option class="new_option" value="' + val + '">' + val + '</option>').selectpicker('refresh').selectpicker('val', val);
     });
     //END ADD LISTENERS REGION
 });

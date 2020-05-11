@@ -1,6 +1,7 @@
-from flask import Blueprint, url_for, render_template, request, current_app, Response
-from flask_login import current_user, login_required
 import json
+
+from flask import Blueprint, request, Response
+from flask_login import login_required
 
 from app import db
 from models.booksmodel import BooksModel
