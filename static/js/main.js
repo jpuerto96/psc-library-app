@@ -5,7 +5,6 @@ $(document).ready(function () {
     //START ADD LISTENERS REGION
     $document.on('hide.bs.modal', function () {
         $(".modal").remove();
-        $(".modal").children().off();
     });
 
     $document.on("click", '.user_book_row', function () {
