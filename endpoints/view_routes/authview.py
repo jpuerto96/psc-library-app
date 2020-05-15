@@ -62,7 +62,10 @@ def signup():
 
     if signup_form.validate_on_submit():
         # Check if e-mail already exists
-        existing_user = UsersModel.query.filter_by(email=signup_form.email.data).first()
+        existing_user = UsersModel.query.filter(
+            (UsersModel.email == signup_form.email.data) | (UsersModel.username == signup_form.username.data)
+        ).first()
+
         if existing_user is None:
             # Create a user if e-mail doesn't exist already, then add them to DB.
             user = UsersModel(
@@ -87,20 +90,30 @@ def register(registration_token=None):
     """
     Function that loads registration page, and registers user when following e-mail.
     """
-    # If user is already logged in, send them home
     if current_user.is_authenticated:
-        return redirect(url_for('app_view_endpoints.home'))
+        # If user is already logged in and registered, send them home
+        if current_user.is_registered:
+            return redirect(url_for('app_view_endpoints.home'))
 
+        # If there is no registration_token, we can assume that they were directed here from login/sign-up
+        if registration_token is None:
+            # If they are being sent here with no token, generate a token and send them e-mail
+            token = get_token(current_user.email)
+            registration_url = url_for('auth_view_endpoints.register', registration_token=token, _external=True)
+            template = render_template('email_templates/registration_email.html', registration_url=registration_url)
+            send_email("PSC Library Registration", current_user.email, template)
+            logout_user()
+            return render_template('register.html')
+
+    # If any of the cases above break:
+    # User is not logged in
+    # User is logged in but not registered and there is a token
     if registration_token is None:
-        # If they are being sent here with no token, generate a token and send them e-mail
-        token = get_token(current_user.email)
-        registration_url = url_for('auth_view_endpoints.register', registration_token=token, _external=True)
-        template = render_template('email_templates/registration_email.html', registration_url=registration_url)
-        send_email("PSC Library Registration", current_user.email, template)
-        logout_user()
-        return render_template('register.html')
+        # If there is no registration_token, they should be re-directed to the log-in page.
+        # If they have an account, then the next log-in page will generate a new token for them to follow.
+        # If they don't have an account, then they will have to signup, which will issue a token.
+        return redirect(url_for('auth_view_endpoints.login'))
     else:
-        # Check if valid token
         email = is_valid_token(registration_token)
         if email:
             # If valid token, get user, set them to registered, and log them in.
@@ -111,4 +124,7 @@ def register(registration_token=None):
                 login_user(user)
                 return redirect(url_for('app_view_endpoints.home'))
         else:
-            return render_template('register.html')
+            # If not a valid token, re-direct them to log-in page.
+            # If they have an account, then the next log-in page will generate a new token for them to follow.
+            # If they don't have an account, then they will have to signup, which will issue a token.
+            return redirect(url_for('auth_view_endpoints.login'))
